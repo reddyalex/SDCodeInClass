@@ -32,6 +32,43 @@ public class BelajarPrirotyQueue {
         
     }
     
+    public static int lastStoneWeight(int[] stones) {
+        
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());        
+        for (int stone : stones) {
+            pq.add(stone);
+        }     
+        while(pq.size()>1){
+            int y = pq.remove();
+            int x = pq.remove();          
+            if( y-x>0){
+                pq.add(y-x);
+            }            
+        }
+        if(pq.size()==0) return 0;
+        return pq.remove();
+    }
+    
+    public static int nthUglyNumber(int n) {
+        PriorityQueue<Long> pq = new PriorityQueue<>();
+        pq.add(1l);        
+        for (int i=0;i<n-1;i++){
+            Long value = pq.remove();
+            
+            while(pq.size()>0 && pq.peek()==value){
+                pq.remove();
+            }
+            pq.add(value*2);
+            pq.add(value*3);
+            pq.add(value*5);
+                    
+        }
+        return pq.remove().intValue();
+        
+        //[1, 2, 3, 4, 5, 6, 8, 9, 10, 12]
+        // 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16,
+    }
+    
     
     public static void main(String[] args) {
         
@@ -91,7 +128,13 @@ public class BelajarPrirotyQueue {
         pqTwithComparable.add(new TireWithComparable("Goodyear",98.99, 220000));
         pqTwithComparable.add(new TireWithComparable("Michelin",101.99, 150000));
         
-         System.out.println(pqTwithComparable.remove());
+        System.out.println(pqTwithComparable.remove());
         
+        for (int i = 1; i <= 10; i++) {
+            System.out.print(nthUglyNumber(i) + ", ");
+        }
+
+         
+         
     }
 }
